@@ -8,6 +8,7 @@ public class PlayerShot : MonoBehaviour
     [SerializeField] private Transform[] firePoints;
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private float bulletForce = 40f;
+    [SerializeField] private Transform smokeEffect;
 
     private float shotTime;
 
@@ -32,19 +33,34 @@ public class PlayerShot : MonoBehaviour
         {
             if (Time.time >= shotTime)
             {
-                Rigidbody2D bullet = GetBullet(firePoints[1], shotPrefabs[1]);
-                Rigidbody2D bullet1 = GetBullet(firePoints[2], shotPrefabs[1]);
-                bullet.AddForce(firePoints[1].up * bulletForce, ForceMode2D.Impulse);
-                bullet1.AddForce(firePoints[2].up * bulletForce, ForceMode2D.Impulse);
+                CallEffectSmoke();
+                for (int i = 1; i < firePoints.Length; i++)
+                {
+                    Rigidbody2D bullet = GetBullet(firePoints[i], shotPrefabs[1]);
+                    bullet.AddForce(firePoints[i].up * bulletForce, ForceMode2D.Impulse);
+                }
                 shotTime = Time.time + (timeBetweenShots * 2);
+
+
             }
         }
     }
-
+    
+    
     private Rigidbody2D GetBullet(Transform firePoint, Transform colorPrefab)
     {
-        Transform bullet = Instantiate(colorPrefab, firePoint.position, transform.rotation);
+        Transform bullet = Instantiate(colorPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D theRB = bullet.GetComponent<Rigidbody2D>();
         return theRB;
+    }
+
+    private void CallEffectSmoke()
+    {
+        var smoke1 = Instantiate(smokeEffect, firePoints[1].position, firePoints[1].rotation);
+        var smoke2 = Instantiate(smokeEffect, firePoints[4].position, firePoints[4].rotation);
+        smoke1.transform.parent = gameObject.transform;
+        smoke2.transform.parent = gameObject.transform;
+        Destroy(smoke1.gameObject, 1);
+        Destroy(smoke2.gameObject, 1);
     }
 }

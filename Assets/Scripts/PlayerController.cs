@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] Transform bottomLeftLimit, topRightLimit;
     private Rigidbody2D theRB;
     private Vector2 _direction;
 
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         OnInput();
         FollowMouse();
+        LimitScreen(bottomLeftLimit, topRightLimit);
     }
 
     private void FixedUpdate()
@@ -47,5 +49,13 @@ public class PlayerController : MonoBehaviour
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 
+    }
+
+    private void LimitScreen(Transform bottomLeftLimit, Transform topRightLimit)
+    {
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, bottomLeftLimit.position.x, topRightLimit.position.x), 
+            Mathf.Clamp(transform.position.y, bottomLeftLimit.position.y, topRightLimit.position.y), 
+            transform.position.z);
     }
 }

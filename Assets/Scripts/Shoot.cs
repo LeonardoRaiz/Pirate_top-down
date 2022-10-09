@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-
     private void OnBecameInvisible()
     {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 1);
     }
 
 }
