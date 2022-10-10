@@ -23,6 +23,7 @@ public class PlayerShot : MonoBehaviour
         {
             if (Time.time >= shotTime)
             {
+                FindObjectOfType<AudioManager>().Play("BulletFront");
                 Rigidbody2D bullet = GetBullet(firePoints[0], shotPrefabs[0]);
                 bullet.AddForce(firePoints[0].up * bulletForce, ForceMode2D.Impulse);
                 shotTime = Time.time + timeBetweenShots;
@@ -34,6 +35,7 @@ public class PlayerShot : MonoBehaviour
             if (Time.time >= shotTime)
             {
                 CallEffectSmoke();
+                FindObjectOfType<AudioManager>().Play("BulletSide");
                 for (int i = 1; i < firePoints.Length; i++)
                 {
                     Rigidbody2D bullet = GetBullet(firePoints[i], shotPrefabs[1]);
