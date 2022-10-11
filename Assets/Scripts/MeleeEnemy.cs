@@ -39,8 +39,7 @@ public class MeleeEnemy : Enemy
 
     private IEnumerator Attack()
     {
-        player.GetComponent<HealthManager>().TakeDamage(damageAmount);
-
+        
         Vector2 originalPosition = transform.position;
         Vector2 targetPosition = player.position;
 
@@ -52,5 +51,15 @@ public class MeleeEnemy : Enemy
             transform.position = Vector2.Lerp(originalPosition, targetPosition, formula);
             yield return null;
         }
+        
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.tag == "Player")
+        {
+            player.GetComponent<HealthManager>().TakeDamage(damageAmount);
+            gameObject.GetComponent<HealthManager>().TakeDamage(3);
+        }
+    }
+    
 }   

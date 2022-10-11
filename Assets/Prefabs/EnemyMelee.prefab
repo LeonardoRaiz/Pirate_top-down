@@ -112,6 +112,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4934198142746102269, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4934198142746102270, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -160,6 +164,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5318130652932605689, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318130652932605689, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318130652932605689, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4934198142746102271, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
     - {fileID: 4934198142746102243, guid: b636ed239f9ba0a4a8b9b568e80be231, type: 3}
@@ -187,9 +203,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeb23237ddd4c9448be9ddae2735533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1
+  _speed: 2
   _speedRotation: 2
   _timeBetweenAttacks: 2
   _damageAmount: 1
+  pickupChance: 20
+  pickups:
+  - {fileID: 9130063133392613542, guid: 3fd5317345156624381c40edd5b5c93e, type: 3}
   stopDistance: 2
   attackSpeed: 0.5

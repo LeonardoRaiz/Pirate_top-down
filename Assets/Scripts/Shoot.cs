@@ -20,6 +20,14 @@ public class Shoot : MonoBehaviour
             Destroy(impactEffect.gameObject, .3f);
             Destroy(gameObject);
         }
+
+        if (other.tag == "Player")
+        {
+            other.gameObject.GetComponent<HealthManager>().TakeDamage(damageAmount);
+            Transform impactEffect = Instantiate(smokeEffect, transform.position, Quaternion.identity);
+            Destroy(impactEffect.gameObject, .3f);
+            Destroy(gameObject);
+        }
     }
 
 }

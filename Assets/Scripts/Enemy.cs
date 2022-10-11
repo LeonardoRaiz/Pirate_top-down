@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _timeBetweenAttacks;
     [SerializeField] private int _damageAmount;
     private Transform _player;
+
+    [SerializeField] private int pickupChance;
+    [SerializeField] private Transform[] pickups;
     public float speed
     {
         get { return _speed; }
@@ -51,4 +54,12 @@ public class Enemy : MonoBehaviour
         
     }
     
+    public void Drop()
+    {
+        int randomNumber = Random.Range(0, 101);
+        if (randomNumber < pickupChance)
+        {
+            Instantiate(pickups[0], transform.position, Quaternion.identity);
+        }
+    }
 }
