@@ -21,6 +21,8 @@ public class WaveSpawner : MonoBehaviour
     private Transform player;
 
     private bool finishedSpawning;
+    [SerializeField] private Timer testTimer;
+    [SerializeField] GameObject endGameMenu;
 
     private void Start()
     {
@@ -34,17 +36,18 @@ public class WaveSpawner : MonoBehaviour
         StartCoroutine(SpawnWave(index));
     }
 
-    IEnumerator SpawnWave (int index)
+    IEnumerator SpawnWave(int index)
     {
         currentWave = waves[index];
         for (int i = 0; i < currentWave.count; i++)
         {
             if (player == null)
             {
+                StartCoroutine(EndGame());
                 yield break;
             }
 
-            Enemy randomEnemy = currentWave.enemies[Random.Range(0,currentWave.enemies.Length)];
+            Enemy randomEnemy = currentWave.enemies[Random.Range(0, currentWave.enemies.Length)];
 
             Transform randomSpot = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
@@ -52,8 +55,17 @@ public class WaveSpawner : MonoBehaviour
 
             if (i == currentWave.count - 1)
             {
-                finishedSpawning = true;
-            } else {
+                if (!testTimer.GetTime())
+                {
+                    i = 0;
+                }
+                else
+                {
+                    finishedSpawning = true;
+                }
+            }
+            else
+            {
                 finishedSpawning = false;
             }
 
@@ -61,7 +73,8 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (finishedSpawning == true && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
             finishedSpawning = false;
@@ -69,9 +82,19 @@ public class WaveSpawner : MonoBehaviour
             {
                 currentWaveIndex++;
                 StartCoroutine(StartNextWave(currentWaveIndex));
-            } else {
-                Debug.Log("GAME ENCERRADO");
+            }
+            else
+            {
+                StartCoroutine(EndGame());
             }
         }
+    }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(3);
+        endGameMenu.SetActive(true);
+        Time.timeScale = 0f;
+        Debug.Log("GAME ENCERRADO");
     }
 }

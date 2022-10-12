@@ -8,28 +8,29 @@ public class HealthManager : MonoBehaviour
     public event EventHandler OnDamage; 
     public event EventHandler OnAddLife; 
 
-    [SerializeField] private int currentHealth;
-    [SerializeField] private int maxHealth;
+    [SerializeField] private int _currentHealth;
+    [SerializeField] private int _maxHealth;
     [SerializeField] private Transform deathEffect;
 
 
     private void Awake()
     {
-        currentHealth = maxHealth;
+        _currentHealth = _maxHealth;
     }
 
     public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damageAmount;
+        _currentHealth -= damageAmount;
 
         OnDamage?.Invoke(this, EventArgs.Empty);
 
-        if (currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             Transform effect = Instantiate(deathEffect, transform.position, Quaternion.identity);
             if (gameObject.tag == "Enemy")
             {
                 gameObject.GetComponent<Enemy>().Drop();
+                ScoreUI.scoreValue += gameObject.GetComponent<Enemy>().GetPoints();
             }
             Destroy(effect.gameObject, 1);
             Destroy(gameObject);
@@ -38,12 +39,22 @@ public class HealthManager : MonoBehaviour
 
     public float GetHealthNormalized()
     {
-        return  (float)currentHealth / maxHealth;
+        return  (float)_currentHealth / _maxHealth;
+    }
+
+    public int maxHealth
+    {
+        get { return _maxHealth; }
+    }
+
+    public int currentHealth
+    {
+        get { return _currentHealth; }
     }
 
     public void AddLife()
     {
-        currentHealth += 1;
+        _currentHealth += 1;
         OnAddLife?.Invoke(this, EventArgs.Empty);
     }
 

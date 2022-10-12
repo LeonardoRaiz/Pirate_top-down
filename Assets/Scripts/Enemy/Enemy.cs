@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int pickupChance;
     [SerializeField] private Transform[] pickups;
+
+    [SerializeField] private int _points;
     public float speed
     {
         get { return _speed; }
@@ -40,6 +42,11 @@ public class Enemy : MonoBehaviour
     {
         get { return _damageAmount; }
         set { _damageAmount = value; }
+    }
+
+    public int GetPoints()
+    {
+        return _points;
     }
 
 

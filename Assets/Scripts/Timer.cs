@@ -10,6 +10,8 @@ public class Timer : MonoBehaviour
 
     private float timer;
 
+    private bool finalGame = false;
+
     [SerializeField] private TextMeshProUGUI[] textMeshPros;
 
 
@@ -24,10 +26,14 @@ public class Timer : MonoBehaviour
         {
             timer -= Time.deltaTime;
             UpdateTimerDisplay(timer);
-        } else {
-            Flash();
         }
-        
+        else
+        {
+            finalGame = true;
+            Flash();
+            GetTime();
+        }
+
     }
 
     private void ResetTimer()
@@ -56,4 +62,8 @@ public class Timer : MonoBehaviour
         }
     }
 
+    public bool GetTime()
+    {
+        return finalGame;
+    }
 }
