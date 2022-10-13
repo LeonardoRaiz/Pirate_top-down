@@ -6,7 +6,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private float timeDuration = 1f * 60f;
+    //[SerializeField] private float timeDuration = 1f * 60f;
 
     private float timer;
 
@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        timer = timeDuration;
+        timer = (1f * GameManager.instance.timeGame);
     }
 
     private void Update()
@@ -38,7 +38,7 @@ public class Timer : MonoBehaviour
 
     private void ResetTimer()
     {
-        timer = timeDuration;
+        timer = (1f * GameManager.instance.timeGame);
     }
 
     private void UpdateTimerDisplay(float time)

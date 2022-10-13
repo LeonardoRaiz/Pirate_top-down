@@ -26,6 +26,7 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
+        waves[0].timeBetweenSpawns = GameManager.instance.spawnGame;
         player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
         StartCoroutine(StartNextWave(currentWaveIndex));
     }
@@ -43,7 +44,6 @@ public class WaveSpawner : MonoBehaviour
         {
             if (player == null)
             {
-                StartCoroutine(EndGame());
                 yield break;
             }
 
@@ -75,26 +75,32 @@ public class WaveSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (finishedSpawning == true && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        if (player == null)
         {
-            finishedSpawning = false;
-            if (currentWaveIndex + 1 < waves.Length)
+            StartCoroutine(EndGame());
+        }
+        else
+        {
+            if (finishedSpawning == true && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
             {
-                currentWaveIndex++;
-                StartCoroutine(StartNextWave(currentWaveIndex));
-            }
-            else
-            {
-                StartCoroutine(EndGame());
+                finishedSpawning = false;
+                if (currentWaveIndex + 1 < waves.Length)
+                {
+                    currentWaveIndex++;
+                    StartCoroutine(StartNextWave(currentWaveIndex));
+                }
+                else
+                {
+                    StartCoroutine(EndGame());
+                }
             }
         }
+
     }
 
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(3);
         endGameMenu.SetActive(true);
-        Time.timeScale = 0f;
-        Debug.Log("GAME ENCERRADO");
     }
 }
